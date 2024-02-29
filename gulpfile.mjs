@@ -28,6 +28,17 @@ const paths = {
     src: 'src/**/*.html',
     dest: 'dist/'
   },
+  favicons: {
+    src: [
+      'src/*.ico',
+      'src/*.webmanifest',
+      'src/*.xml',
+      'src/apple-touch-icon.png',
+      'src/favicon-16x16.png', // Explicitly including favicon sizes
+      'src/favicon-32x32.png'
+    ],
+    dest: 'dist/'
+  },
   static: {
     bootstrap: 'src/bootstrap/**/*',
     humans: 'src/humans.txt',
@@ -54,9 +65,9 @@ function styles() {
 function scripts() {
   return gulp.src(paths.scripts.src)
     .pipe(uglify())
-    .pipe(rename({
-      suffix: '.min'
-    }))
+    // .pipe(rename({
+    //   suffix: '.min'
+    // }))
     .pipe(gulp.dest(paths.scripts.dest))
     .pipe(browserSync.stream());
 }
@@ -73,6 +84,12 @@ function html() {
   return gulp.src(paths.html.src)
     .pipe(gulp.dest(paths.html.dest))
     .pipe(browserSync.stream());
+}
+
+// Favicons and related assets task
+function favicons() {
+  return gulp.src(paths.favicons.src)
+    .pipe(gulp.dest(paths.favicons.dest));
 }
 
 // Static files task
@@ -105,8 +122,9 @@ function watch() {
   gulp.watch(paths.scripts.src, scripts);
   gulp.watch(paths.images.src, images);
   gulp.watch(paths.html.src, html).on('change', browserSync.reload);
+  gulp.watch(paths.favicons.src, favicons).on('change', browserSync.reload);
 }
 
 // Adjust the default task to include the new tasks
-const build = gulp.series(gulp.parallel(styles, scripts, images, html, staticFiles), watch);
+const build = gulp.series(gulp.parallel(styles, scripts, images, html, favicons, staticFiles), watch);
 export default build;
