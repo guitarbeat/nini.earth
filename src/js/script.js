@@ -55,16 +55,17 @@
     //audioPlayer: new Audio(),
     audioPlayer: document.createElement('audio'),
     text: [
-      '<p>POTUS OS</p>'+
-      '<p>Copyright (c) 2049, 2050. All Rights Reserved</p>'+
-      '<p>BIOS Version: 204902041 Release 5</p>'+
+      '<p>niniOS</p>'+
+      '<p>Copyright (c) 1997,'+ new Date().getFullYear()+ '. All Rights Reserved</p>'+
+      '<p>BIOS Version: 0.1.1.2</p>'+
+      '<p>Core Singularity Matrix: Version 3.5.8.12</p>'+
       '<br />',
-      '<p>Battery Pack: 98% OK</p>',
-      '<p>Memory Test: 16384K OK</p>',
-      '<p>Initializing USB Controllers ... Done</p>',
+      '<p>Quantum Battery Status: 98% - Harmonized</p>',
+      '<p>Neural Memory Alignment: 16384K - Synchronized</p>',
+      '<p>Aligning Multiverse Interfaces ... Unified</p>',
       '<br />'+
-      '<p>KANYE 2049 imagines a universe where our heroes actually act like heroes. The views and opinions of Kanye West do not reflect the views and opinions of characters in this imagined universe.</p>',
-      '<br />'+
+      "<p>niniOS transcends traditional boundaries, blending the essence of art and science in a cosmic dance of creation and discovery. This OS is not just software; it's an interstellar bridge that connects the precision of technology with the wild, untamed pulse of the universe. Here, silicon syncs with the soul, echoing the rhythmic patterns of celestial bodies and earthly biomes. In niniOS, technological advancements reflect the ancient wisdom of the cosmos, weaving a surreal tapestry where the digital and natural realms coalesce into a unified field of possibilities. Our journey through this digital cosmos offers ethereal insights, yet remains unanchored to any singular worldly perspective.</p>",
+      '<br />' +
       '<br />',
       '<p>Press Any Key to boot system</p>'
     ],
@@ -330,10 +331,24 @@
 
   $('.login form').on('submit', function(e){
     e.preventDefault();
-    var answers = ['dGhlIGNvbGxlZ2UgZHJvcG91dA==', 'bGF0ZSByZWdpc3RyYXRpb24=', 'Z3JhZHVhdGlvbg==', 'ODA4ICYgaGVhcnRicmVhaw==', 'bXkgYmVhdXRpZnVsIGRhcmsgdHdpc3RlZCBmYW50YXN5', 'eWVlenVz', 'dGhlIGxpZmUgb2YgcGFibG8=', 'eWU=', 'amVzdXMgaXMga2luZw==', 'eWFuZGhp', 'dHVyYm9ncmFmeCAxNg==', 'Z29vZCBhc3Mgam9i', 'Y3J1ZWwgd2ludGVy', 'Y3J1ZWwgc3VtbWVy', 'c28gaGVscCBtZSBnb2Q=', 'c3dpc2g=', 'd2F2ZXM=', 'bG92ZSBldmVyeW9uZQ==', 'ZG9uZGE='];
+    var answers = 
+    ['YXJpZXM=', // aries
+    'dGF1cnVz', // taurus
+    'Z2VtaW5p', // gemini
+    'Y2FuY2Vy',   // cancer
+    'bGVv', // leo
+    'dmlyZ28=', // virgo
+    'bGlicmE=', // libra
+    'c2NvcnBpbw==', // scorpio
+    'c2FnaXR0YXJpdXM=', // sagittarius
+    'Y2Fwcmljb3Ju', // capricorn
+    'YXF1YXJpdXM=',  // aquarius
+    'cGlzY2Vz']; // pisces
     var value = $('.login form input[type=password]').val().toLowerCase();
+  // // Debugging output
+  // console.log("Input value (lowercase): " + value);
+  // console.log("Encoded input: " + btoa(value));
 
-    //console.log(btoa(value));
     if(answers.includes(btoa(value))){
       $('.login').removeClass('loaded');
       setTimeout(function(){
