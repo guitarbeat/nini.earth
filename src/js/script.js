@@ -64,7 +64,7 @@
       '<p>Neural Memory Alignment: 16384K - Synchronized</p>',
       '<p>Aligning Multiverse Interfaces ... Unified</p>',
       '<br />'+
-      "<p>niniOS transcends traditional boundaries, blending the essence of art and science in a cosmic dance of creation and discovery. This OS is not just software; it's an interstellar bridge that connects the precision of technology with the wild, untamed pulse of the universe. Here, silicon syncs with the soul, echoing the rhythmic patterns of celestial bodies and earthly biomes. In niniOS, technological advancements reflect the ancient wisdom of the cosmos, weaving a surreal tapestry where the digital and natural realms coalesce into a unified field of possibilities. Our journey through this digital cosmos offers ethereal insights, yet remains unanchored to any singular worldly perspective.</p>",
+      "<p>niniOS signifies the creative interplay between two worlds - expanding perspectives on what an operating system can be. By infusing technology with shades of humanity, this OS blends the precision of code with the wild, untamed pulse of the universe - connecting silicon with the soul.</p>",
       '<br />' +
       '<br />',
       '<p>Press Any Key to boot system</p>'
@@ -100,7 +100,7 @@
           self.setLoading(true);
           setTimeout(function(){
             $('.login').addClass('loaded');
-            //$('.login input[type="password"]').focus();
+            // $('.login input[type="password"]').focus();
             self.setLoading(false);
           }, 1500);
 
@@ -178,7 +178,7 @@
       hours = hours % 12;
       hours = hours ? hours : 12; // the hour '0' should be '12'
       minutes = minutes < 10 ? '0'+minutes : minutes;
-      var strTime = hours + ':' + minutes + ampm + '<span> - ' + monthNames[date.getMonth()] + '. ' + date.getDate() + ', 2049</span>';
+      var strTime = hours + ':' + minutes + ampm + '<span> - ' + monthNames[date.getMonth()] + '. ' + date.getDate() + ', ' + date.getFullYear() + '</span>';
       return strTime;
     },
     displayTime: function(){
@@ -397,9 +397,10 @@
   $('#battery').on('click', function(e){
     e.preventDefault();
     $('.navbar .item.submenu.active').removeClass('active');
-    var content = '<div><p>Battery power courtesy of Tesla Petroleum. Tesla Petroleum is not liable for any burns, explosions, or airborne carcinogens caused by this battery pack. Battery pack is single use; Do not attempt to recycle.</p></div>';
+    var content = '<div><p>Your device contains the GuitarBeat Infinity Core - a quantum battery for traversing cosmic dimensions. The Core powers niniOS to channel frequencies beyond perceived reality. Even mild vibrational mismatches may destabilize your journey, so handle with utmost care and avoid sources of cosmic turbulence like heat or moisture.If you feel yourself slipping into a negative thought loop, contact your Guide immediately to re-align the powercells. GuitarBeat is not liable for journeys gone astray. Stay centered and ride the wave.</p></div>';
     $('.dialog').html(content).css('display', 'flex');
   });
+  
 
 
 
