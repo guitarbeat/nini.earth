@@ -116,7 +116,8 @@ function watch() {
   browserSync.init({
     server: {
       baseDir: './dist'
-    }
+    },
+    open: false // Prevent Browsersync from opening a browser window
   });
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.scripts.src, scripts);
