@@ -6,7 +6,7 @@ const sass = gulpSass(sassModule);
 import cleanCSS from 'gulp-clean-css';
 import uglify from 'gulp-uglify';
 import rename from 'gulp-rename';
-import imagemin from 'gulp-imagemin';
+// import imagemin from 'gulp-imagemin';
 import browserSyncModule from 'browser-sync';
 const browserSync = browserSyncModule.create();
 
@@ -75,7 +75,7 @@ function scripts() {
 // Image optimization task
 function images() {
   return gulp.src(paths.images.src)
-    .pipe(imagemin())
+    // .pipe(imagemin())
     .pipe(gulp.dest(paths.images.dest));
 }
 
