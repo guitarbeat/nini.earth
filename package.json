@@ -4,7 +4,7 @@
   "description": "My artist website",
   "main": "index.js",
   "scripts": {
-    "build": "gulp",
+    "serve": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
