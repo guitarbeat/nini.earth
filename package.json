@@ -1,22 +1,42 @@
 {
   "name": "nini.earth",
   "version": "1.0.0",
-  "description": "My artist website",
+  "description": "A retro-futuristic tribute website inspired by kanye2049.com, featuring a BIOS-style boot sequence, audio player, and interactive elements set in a dystopian 2049 narrative.",
   "main": "index.js",
   "scripts": {
     "serve": "gulp",
+    "build": "gulp build",
+    "dev": "gulp",
+    "start": "gulp",
+    "clean": "rm -rf dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "kanye-west",
+    "tribute",
+    "retro",
+    "futuristic",
+    "bios",
+    "audio-player",
+    "interactive",
+    "web-art",
+    "2049",
+    "dystopian"
+  ],
+  "author": "Aaron Woods",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/guitarbeat/nini.earth.git"
   },
-  "author": "Aaron Woods",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/guitarbeat/nini.earth/issues"
   },
   "homepage": "https://github.com/guitarbeat/nini.earth#readme",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
   "devDependencies": {
     "browser-sync": "^3.0.2",
     "gulp": "^4.0.2",
@@ -26,5 +46,12 @@
     "gulp-sass": "^5.1.0",
     "gulp-uglify": "^3.0.2",
     "sass": "^1.71.1"
-  }
+  },
+  "dependencies": {},
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie <= 10"
+  ]
 }
