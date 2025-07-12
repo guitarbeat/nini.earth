@@ -1,14 +1,44 @@
+/**
+ * @fileoverview Kanye 2049 Tribute - Main JavaScript Application
+ * 
+ * This file contains the core functionality for the Kanye 2049 tribute website.
+ * It implements a retro-futuristic interface with BIOS-style boot sequence,
+ * audio player functionality, and interactive elements.
+ * 
+ * @author Aaron Woods
+ * @version 1.0.0
+ * @license ISC
+ */
+
 (function($){
+  /**
+   * @type {boolean} - Controls whether to display the boot sequence
+   */
   var displayBoot = true;
+  
+  /**
+   * @type {boolean} - Controls the CRT monitor effect
+   */
   var crtEffect = true;
+  
+  /**
+   * @type {boolean} - Controls ambient background audio
+   */
   var ambientSound = false;
 
-  // IE11 forEach polyfill
+  /**
+   * IE11 forEach polyfill for NodeList
+   * Adds forEach method to NodeList prototype for older browsers
+   */
   if (typeof NodeList !== "undefined" && NodeList.prototype && !NodeList.prototype.forEach) {
     NodeList.prototype.forEach = Array.prototype.forEach;
   }
 
-  // Google Analytics Custom Events
+  /**
+   * Google Analytics Custom Events Handler
+   * Sets up click event listeners for elements with 'ga-ce' class
+   * Sends custom events to Google Analytics when triggered
+   */
   var gaCustomEventTrigger = document.querySelectorAll('.ga-ce');
   gaCustomEventTrigger.forEach(function(e,i){
     e.addEventListener('click', function(){
@@ -23,10 +53,20 @@
     });
   });
 
+  /**
+   * Share Popup Manager
+   * Handles social media sharing functionality
+   * @type {Object}
+   */
   var sharePopups = undefined;
 	sharePopups = {
+		/** @type {jQuery} - Share popup trigger elements */
 		triggers : $('.share-popup'),
 
+		/**
+		 * Initialize share popup functionality
+		 * Sets up click handlers for share buttons
+		 */
 		init: function(){
 			var self = this;
 			self.triggers.click(function(e){
@@ -34,6 +74,11 @@
 				self.popup($(this).attr('href'));
 			});
 		},
+		
+		/**
+		 * Opens a popup window for sharing
+		 * @param {string} target - The URL to open in the popup
+		 */
 		popup: function(target){
 		    //console.log(target);
 		    popupWindow = window.open(target,'','width=600,height=400');
@@ -42,18 +87,34 @@
 	};
 	sharePopups.init();
 
-
+  /**
+   * Main System Object
+   * Controls the core application functionality including boot sequence,
+   * audio playback, and UI interactions
+   * @type {Object}
+   */
   var system = {
+    /** @type {jQuery} - Main screen container */
     view: $('.screen'),
+    /** @type {jQuery} - BIOS boot screen element */
     bios: $('.screen .bios'),
+    /** @type {boolean} - Whether the system has been started */
     started: false,
+    /** @type {Object} - Loading state flags */
     loading: {
       audio: false,
       video: false
     },
+    /** @type {Audio} - Background ambient audio player */
     ambientAudio: new Audio('sound/ambient.mp3'),
-    //audioPlayer: new Audio(),
+    /** @type {HTMLAudioElement} - Main audio player for music tracks */
     audioPlayer: document.createElement('audio'),
+    
+    /**
+     * Boot sequence text array
+     * Contains the BIOS-style startup messages
+     * @type {Array<string>}
+     */
     text: [
       '<p>niniOS</p>'+
       '<p>Copyright (c) 1997,'+ new Date().getFullYear()+ '. All Rights Reserved</p>'+
@@ -69,23 +130,37 @@
       '<br />',
       '<p>Press Any Key to boot system</p>'
     ],
+    
+    /**
+     * Media session action handlers
+     * Maps media control actions to system functions
+     * @type {Array<Array>}
+     */
     actionHandlers: [
         ['play', () => { this.resumeTrack(); }],
         ['pause', () => { this.pauseTrack(); }],
         ['stop', () => { this.stopTrack(); }]
     ],
+    
+    /**
+     * Initialize the system
+     * Sets up event listeners, audio players, and starts the boot sequence
+     */
     init: function(){
       var self = this;
 
       self.setBodyHeight();
 
+      // Detect iOS device for special handling
       var agent=navigator.userAgent.toLowerCase();
       self.isIPhone = (agent.indexOf('iphone')!=-1);
 
       self.displayTime();
 
+      // Start boot sequence after a short delay
       setTimeout(function(){ self.boot(); }, 100);
 
+      // Set up media session handlers for system media controls
       for (const [action, handler] of self.actionHandlers) {
         try {
           navigator.mediaSession.setActionHandler(action, handler);
@@ -94,6 +169,7 @@
         }
       }
 
+      // Handle user interaction to start the system
       $(window).on('keyup click', function(e){
         if(!system.started){
           self.bios.hide();
@@ -104,6 +180,7 @@
             self.setLoading(false);
           }, 1500);
 
+          // Start ambient audio if enabled and not on iOS
           if(ambientSound && !self.isIPhone){
             self.ambientAudio.play();
             $(self.ambientAudio).animate({volume: .2}, 3000);
@@ -112,10 +189,12 @@
         }
       });
 
+      // Custom cursor movement (commented out)
       // $(window).on('mousemove', function(e){
       //     $(".cursor").css({left:e.pageX, top:e.pageY});
       // });
 
+      // Configure ambient audio for seamless looping
       self.ambientAudio.loop = true;
       self.ambientAudio.volume = 0;
       self.ambientAudio.addEventListener('timeupdate', function(){
@@ -126,6 +205,7 @@
         }
       });
 
+      // Handle audio player events
       $(self.audioPlayer).on('ended', function(){
         self.stopTrack();
       });
@@ -137,6 +217,7 @@
         //audio.play();
       });
 
+      // Handle video player events
       $('#video').on("stalled", function() {
         var video = this;
         console.log("video stalled");
@@ -144,6 +225,7 @@
         //video.play();
       });
 
+      // Set up media session handlers for system integration
       if ('mediaSession' in navigator) {
         navigator.mediaSession.setActionHandler("pause", () => {
           self.pauseTrack();
@@ -156,12 +238,24 @@
         });
       }
     },
+    
+    /**
+     * Set body height to viewport height
+     * Ensures full viewport coverage and handles mobile browsers
+     */
     setBodyHeight: function(){
       var self = this;
       $('body').css('height', window.innerHeight);
 
+      // Recursively call to handle dynamic height changes
       setTimeout(self.setBodyHeight, 100);
     },
+    
+    /**
+     * Set loading state
+     * Adds or removes loading class and cursor
+     * @param {boolean} state - Whether to show loading state
+     */
     setLoading: function(state){
       var self = this;
       if(state){
@@ -170,6 +264,12 @@
         $('body').removeClass('loading');
       }
     },
+    
+    /**
+     * Format date to AM/PM format with month and day
+     * @param {Date} date - Date object to format
+     * @returns {string} Formatted time string
+     */
     formatAMPM: function (date) {
       var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       var hours = date.getHours();
@@ -181,20 +281,31 @@
       var strTime = hours + ':' + minutes + ampm + '<span> - ' + monthNames[date.getMonth()] + '. ' + date.getDate() + ', ' + date.getFullYear() + '</span>';
       return strTime;
     },
+    
+    /**
+     * Display current time
+     * Updates the time display every second
+     */
     displayTime: function(){
       var self = this;
       var time = self.formatAMPM(new Date);
       $('#time').html(time);
       setTimeout(function(){ self.displayTime(); }, 1000);
     },
+    
+    /**
+     * Initialize boot sequence
+     * Sets up the retro-futuristic boot experience
+     */
     boot: function(){
       var self = this;
-      // hide fullscreen toggle on fucking iOS
+      // Hide fullscreen toggle on iOS devices
 
       if (self.isIPhone){
         $('.hide-on-ios').hide();
       }
 
+      // Apply CRT effect if enabled
       if(crtEffect){
         $('body').addClass('crt');
       }
