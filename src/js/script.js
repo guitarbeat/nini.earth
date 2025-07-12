@@ -145,13 +145,13 @@
       });
 
       if ('mediaSession' in navigator) {
-        navigator.mediaSession.setActionHandler("pause", () => {
+        navigator.mediaSession.setActionHandler("pause", function() {
           self.pauseTrack();
         });
-        navigator.mediaSession.setActionHandler("play", () => {
+        navigator.mediaSession.setActionHandler("play", function() {
           self.resumeTrack();
         });
-        navigator.mediaSession.setActionHandler("seekto", details => {
+        navigator.mediaSession.setActionHandler("seekto", function(details) {
           self.audioPlayer.currentTime = details.seekTime;
         });
       }
